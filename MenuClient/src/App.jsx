@@ -17,7 +17,7 @@ function App() {
   if (path.startsWith('/blog/')) {
     page = <BlogPage />;
   } else if (path === '/about') {
-    page = <AboutPage />;
+    page = <AboutPage />; //s
   } else if (path === '/menu') {
     page = <MenuPage />;
   } else if (path === '/blog') {
