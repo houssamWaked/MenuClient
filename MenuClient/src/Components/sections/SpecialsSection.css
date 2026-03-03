@@ -1,0 +1,128 @@
+.specials-section {
+  padding: 94px 0 108px;
+  background: var(--shell);
+}
+
+.specials-section__inner {
+  width: min(1220px, calc(100% - 40px));
+}
+
+.specials-section__head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 36px;
+}
+
+.specials-section__eyebrow {
+  display: inline-block;
+  margin-bottom: 14px;
+  color: var(--gold);
+  font-family: 'Pacifico', cursive;
+  font-size: clamp(1.9rem, 3vw, 2.5rem);
+}
+
+.specials-section__head h2 {
+  margin: 0;
+  color: var(--ink);
+  font-family: 'Manrope', sans-serif;
+  font-size: clamp(2.6rem, 5vw, 4.2rem);
+  font-weight: 900;
+  line-height: 1.05;
+}
+
+.specials-section__controls,
+.specials-section__dots {
+  display: flex;
+  align-items: center;
+}
+
+.specials-section__controls {
+  gap: 12px;
+}
+
+.specials-section__controls button,
+.specials-section__dots button {
+  border: 0;
+  cursor: pointer;
+}
+
+.specials-section__controls button {
+  width: 52px;
+  height: 52px;
+  border-radius: 999px;
+  background: #fff7ef;
+  color: var(--ink);
+  font-size: 1.35rem;
+  font-weight: 900;
+  box-shadow: 0 16px 32px rgba(31, 19, 10, 0.08);
+  transition:
+    transform 220ms var(--motion-ease-soft),
+    background-color 220ms var(--motion-ease-soft),
+    color 220ms var(--motion-ease-soft);
+}
+
+.specials-section__controls button:hover {
+  transform: translateY(-3px);
+  background: var(--accent);
+  color: #fff8ef;
+}
+
+.specials-carousel {
+  overflow: hidden;
+}
+
+.specials-track {
+  display: grid;
+  gap: 24px;
+}
+
+.specials-slide {
+  min-width: 0;
+}
+
+.specials-section__dots {
+  justify-content: center;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.specials-section__dots button {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: rgba(30, 19, 10, 0.16);
+  transition:
+    transform 220ms var(--motion-ease-soft),
+    background-color 220ms var(--motion-ease-soft);
+}
+
+.specials-section__dots button:hover {
+  transform: scale(1.12);
+}
+
+.specials-section__dots button.is-active {
+  background: var(--accent);
+}
+
+@media (max-width: 820px) {
+  .specials-section {
+    padding: 78px 0 88px;
+  }
+
+  .specials-section__head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  .specials-section__inner {
+    width: min(100% - 28px, 1220px);
+  }
+
+  .specials-track {
+    gap: 18px;
+  }
+}

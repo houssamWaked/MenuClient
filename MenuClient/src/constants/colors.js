@@ -1,0 +1,15 @@
+export const palette = {
+  shell: '#f3eee5',
+  shellElevated: '#fbf8f1',
+  shellMuted: '#e6dccd',
+  ink: '#1e130a',
+  inkSoft: '#6f6459',
+  inkInverse: '#fff9f1',
+  accent: '#f45a2a',
+  accentDeep: '#d84a1d',
+  gold: '#efbd3f',
+  cocoa: '#12090b',
+  cocoaSoft: '#201015',
+  line: 'rgba(30, 19, 10, 0.12)',
+  overlay: 'rgba(5, 2, 8, 0.66)',
+};
