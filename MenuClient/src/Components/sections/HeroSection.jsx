@@ -111,5 +111,5 @@ export function HeroSection({ tenantName, tenantSlug, loading, error }) {
         ))}
       </div>
     </header>
-  );
+  ); //s
 }
