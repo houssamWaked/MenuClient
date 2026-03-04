@@ -5,7 +5,11 @@ const envBase =
     ? import.meta.env.VITE_API_BASE_URL.trim()
     : '';
 
-const baseURL = (envBase || '').replace(/\/+$/, '');
+const normalizedEnvBase = (envBase || '').replace(/\/+$/, '');
+const baseURL =
+  typeof window === 'undefined'
+    ? normalizedEnvBase
+    : '';
 
 let authToken = null;
 
