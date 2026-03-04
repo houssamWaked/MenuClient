@@ -1,0 +1,126 @@
+.site-footer {
+  margin-top: 5rem;
+  padding: clamp(3rem, 8vw, 5.5rem) 0 2rem;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(31, 156, 136, 0.22), transparent 28%),
+    linear-gradient(170deg, #123044 0%, #10293a 45%, #0e2231 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.site-footer__grid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.site-footer__location h3,
+.site-footer__newsletter h3 {
+  margin: 0 0 1rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  color: #fff;
+}
+
+.site-footer__location p,
+.site-footer__newsletter p {
+  margin: 0;
+  color: rgba(230, 239, 248, 0.86);
+  line-height: 1.6;
+}
+
+.site-footer__location a {
+  display: inline-block;
+  margin-top: 0.45rem;
+  color: rgba(226, 237, 248, 0.9);
+  text-decoration: none;
+}
+
+.site-footer__location .site-footer__phone {
+  color: #ffbf8f;
+  font-weight: 700;
+  margin-top: 0.9rem;
+  font-size: 1.2rem;
+}
+
+.site-footer__newsletter form {
+  margin: 1rem 0;
+  padding: 0.36rem;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  display: flex;
+  gap: 0.5rem;
+}
+
+.site-footer__newsletter input {
+  flex: 1;
+  border: 0;
+  outline: none;
+  padding: 0.65rem 0.9rem;
+  border-radius: 999px;
+  background: transparent;
+  color: #fff;
+  font-family: inherit;
+  font-size: 0.98rem;
+}
+
+.site-footer__newsletter input::placeholder {
+  color: rgba(232, 241, 250, 0.7);
+}
+
+.site-footer__newsletter button {
+  border: 0;
+  background: var(--color-accent-warm);
+  color: white;
+  border-radius: 999px;
+  padding: 0.65rem 1.3rem;
+  font-weight: 700;
+}
+
+.site-footer__newsletter small {
+  display: block;
+  margin-top: 0.55rem;
+  color: rgba(227, 238, 248, 0.85);
+}
+
+.site-footer__socials {
+  margin-top: 2.6rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+}
+
+.site-footer__socials a {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  text-decoration: none;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  border: 1px dashed rgba(255, 255, 255, 0.5);
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.site-footer__copyright {
+  margin-top: 2.8rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 1.2rem;
+  text-align: center;
+}
+
+.site-footer__copyright p {
+  margin: 0;
+  color: rgba(224, 235, 247, 0.8);
+}
+
+.site-footer__copyright span {
+  color: #ffbf8f;
+}
+
+@media (max-width: 960px) {
+  .site-footer__grid {
+    grid-template-columns: 1fr;
+  }
+}

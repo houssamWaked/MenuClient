@@ -1,0 +1,37 @@
+.blog-post-page {
+  max-width: 54rem;
+}
+
+.blog-post-page small {
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.blog-post-page h2 {
+  margin: 0.5rem 0 1rem;
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: clamp(2rem, 5vw, 4.6rem);
+  line-height: 0.95;
+}
+
+.blog-post-page__lead {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+.blog-post-page p {
+  color: var(--color-muted);
+  line-height: 1.75;
+  font-size: clamp(1rem, 1.5vw, 1.1rem);
+}
+
+.blog-post-page a {
+  margin-top: 1.2rem;
+  display: inline-block;
+  color: var(--color-accent);
+  text-decoration: none;
+  font-weight: 700;
+}

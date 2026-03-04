@@ -1,11 +1,28 @@
 import axios from 'axios';
 
+function normalizeBaseUrl(value) {
+  if (typeof value !== 'string') {
+    return '';
+  }
+
+  const trimmed = value.trim().replace(/\/+$/, '');
+  if (!trimmed) {
+    return '';
+  }
+
+  if (/^https?:\/\//i.test(trimmed)) {
+    return trimmed;
+  }
+
+  return `https://${trimmed}`;
+}
+
 const envBase =
   typeof import.meta.env?.VITE_API_BASE_URL === 'string'
-    ? import.meta.env.VITE_API_BASE_URL.trim()
+    ? normalizeBaseUrl(import.meta.env.VITE_API_BASE_URL)
     : '';
 
-const baseURL = envBase || 'http://localhost:3000';
+const baseURL = envBase || 'http://localhost:3001';
 
 let authToken = null;
 

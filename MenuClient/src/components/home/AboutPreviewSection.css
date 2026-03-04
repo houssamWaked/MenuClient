@@ -1,0 +1,103 @@
+.about-preview {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(1.8rem, 4vw, 4rem);
+  align-items: center;
+}
+
+.about-preview__media {
+  position: relative;
+  padding-right: clamp(3rem, 8vw, 6.5rem);
+  min-height: 620px;
+}
+
+.about-preview__primary {
+  width: 100%;
+  height: 100%;
+  min-height: 620px;
+  object-fit: cover;
+}
+
+.about-preview__secondary {
+  position: absolute;
+  width: clamp(260px, 34vw, 380px);
+  height: clamp(340px, 42vw, 520px);
+  bottom: -3.4rem;
+  right: clamp(-1rem, -1vw, -0.4rem);
+  object-fit: cover;
+  box-shadow: 0 24px 40px rgba(0, 0, 0, 0.22);
+}
+
+.about-preview__content {
+  max-width: 40rem;
+  align-self: start;
+  padding-top: 1rem;
+}
+
+.about-preview__content > p {
+  margin: 0;
+  color: var(--color-accent);
+  font-family: var(--font-script);
+  font-size: clamp(2rem, 3.2vw, 2.8rem);
+}
+
+.about-preview__content h2 {
+  margin: 0.7rem 0 1.2rem;
+  color: var(--color-ink);
+  font-size: clamp(2.4rem, 5vw, 5rem);
+  line-height: 0.95;
+  text-transform: uppercase;
+  font-family: var(--font-display);
+}
+
+.about-preview__content div {
+  margin: 0;
+  color: var(--color-muted);
+  line-height: 1.6;
+  font-size: clamp(1rem, 1.8vw, 1.55rem);
+}
+
+.about-preview__content span {
+  display: inline-block;
+  margin-top: 1.7rem;
+  color: rgba(24, 20, 32, 0.75);
+  font-family: var(--font-script);
+  font-size: clamp(2.6rem, 4vw, 4rem);
+}
+
+@media (max-width: 980px) {
+  .about-preview {
+    grid-template-columns: 1fr;
+  }
+
+  .about-preview__media {
+    min-height: 540px;
+    padding-right: 2.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .about-preview__primary {
+    min-height: 540px;
+  }
+
+  .about-preview__secondary {
+    width: clamp(220px, 55vw, 360px);
+    height: clamp(300px, 64vw, 440px);
+    right: 0;
+  }
+}
+
+@media (max-width: 620px) {
+  .about-preview__media {
+    min-height: 460px;
+    padding-right: 1.5rem;
+  }
+
+  .about-preview__primary {
+    min-height: 460px;
+  }
+
+  .about-preview__secondary {
+    bottom: -1.6rem;
+  }
+}

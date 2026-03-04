@@ -1,0 +1,58 @@
+.story-section {
+  position: relative;
+  background:
+    linear-gradient(145deg, rgba(9, 7, 14, 0.82), rgba(9, 7, 14, 0.68)),
+    var(--story-bg, linear-gradient(120deg, #1a1522, #130f1a));
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+.story-section__backdrop {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 15% 15%, rgba(245, 90, 35, 0.28), transparent 38%);
+}
+
+.story-section__inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 2rem;
+}
+
+.story-section__heading {
+  text-align: center;
+  color: white;
+}
+
+.story-section__heading h2 {
+  margin: 0;
+  display: grid;
+  line-height: 0.92;
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 7vw, 6.2rem);
+  text-transform: uppercase;
+}
+
+.story-section__heading p {
+  margin: 1rem auto 0;
+  color: rgba(255, 255, 255, 0.82);
+  max-width: 38rem;
+  font-size: clamp(0.98rem, 1.7vw, 1.18rem);
+}
+
+.story-section__video-shell {
+  width: min(930px, 100%);
+  margin: 0 auto;
+  border-radius: 1.2rem;
+  overflow: hidden;
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.35);
+}
+
+.story-section__video-shell video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #111;
+}

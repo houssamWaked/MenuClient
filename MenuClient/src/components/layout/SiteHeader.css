@@ -1,0 +1,224 @@
+.site-header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 60;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  transition: background-color 0.35s ease, backdrop-filter 0.35s ease, box-shadow 0.35s ease;
+  background: linear-gradient(180deg, rgba(245, 250, 252, 0.86) 0%, rgba(245, 250, 252, 0.55) 80%, rgba(245, 250, 252, 0) 100%);
+  backdrop-filter: blur(6px) saturate(1.05);
+}
+
+.site-header--solid {
+  background: rgba(246, 250, 252, 0.9);
+  box-shadow: 0 12px 26px rgba(21, 38, 56, 0.14);
+}
+
+.site-header__inner {
+  min-height: 5.5rem;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1rem;
+}
+
+.site-header__toggle {
+  display: none;
+  border: 1px solid var(--color-line);
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--color-ink);
+  padding: 0.45rem 0.8rem;
+  border-radius: 0.7rem;
+}
+
+.site-header__nav {
+  display: flex;
+  gap: 1.2rem;
+}
+
+.site-header__link {
+  color: rgba(17, 35, 53, 0.92);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.92rem;
+  position: relative;
+  padding-bottom: 0.52rem;
+}
+
+.site-header__link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-warm));
+  transition: width 0.2s ease;
+}
+
+.site-header__link:hover::after,
+.site-header__link.is-active::after {
+  width: 100%;
+}
+
+.brand-badge {
+  justify-self: center;
+  width: 9rem;
+  height: 5.5rem;
+  border-radius: 0 0 1.1rem 1.1rem;
+  background: linear-gradient(155deg, #23b99f 0%, #198e7b 55%, #136f61 100%);
+  display: grid;
+  place-items: center;
+  text-decoration: none;
+  color: white;
+  transform: translateY(-0.15rem);
+  box-shadow: 0 14px 28px rgba(23, 124, 108, 0.35);
+}
+
+.brand-badge__icon {
+  position: relative;
+  width: 2.4rem;
+  height: 1.25rem;
+  border-radius: 99px 99px 40px 40px;
+  background: #ffe07f;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  overflow: hidden;
+}
+
+.brand-badge__icon span {
+  display: block;
+  width: 1.25rem;
+  height: 0.16rem;
+  border-radius: 99px;
+  background: #4f7f3e;
+}
+
+.brand-badge__label {
+  font-family: var(--font-display);
+  font-size: 1.12rem;
+  line-height: 1;
+}
+
+.brand-badge small {
+  font-size: 0.63rem;
+  letter-spacing: 0.1em;
+  opacity: 0.9;
+}
+
+.site-header__right {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.site-header__socials {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.site-header__social-link {
+  color: var(--color-ink);
+  text-decoration: none;
+  font-size: 0.72rem;
+  width: 1.35rem;
+  height: 1.35rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--color-line);
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.site-header__phone {
+  color: var(--color-ink);
+  text-decoration: none;
+  font-weight: 800;
+  border: 1px solid rgba(31, 156, 136, 0.5);
+  background: rgba(255, 255, 255, 0.74);
+  border-radius: 999px;
+  padding: 0.52rem 1.06rem;
+  font-size: 0.92rem;
+}
+
+.site-header__cart {
+  border: 1px solid rgba(22, 38, 58, 0.2);
+  background: rgba(255, 255, 255, 0.75);
+  color: var(--color-ink);
+  border-radius: 999px;
+  padding: 0.42rem 0.9rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.site-header__cart span {
+  background: var(--color-accent-warm);
+  color: #fff;
+  min-width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-size: 0.75rem;
+}
+
+@media (max-width: 1060px) {
+  .site-header__socials,
+  .site-header__phone {
+    display: none;
+  }
+}
+
+@media (max-width: 860px) {
+  .site-header__inner {
+    grid-template-columns: auto auto 1fr auto;
+  }
+
+  .site-header__toggle {
+    display: inline-flex;
+  }
+
+  .site-header__nav {
+    position: absolute;
+    top: 100%;
+    left: 1rem;
+    right: 1rem;
+    border-radius: 1rem;
+    padding: 0.9rem;
+    background: rgba(245, 250, 252, 0.95);
+    border: 1px solid var(--color-line);
+    flex-wrap: wrap;
+    box-shadow: 0 12px 25px rgba(22, 38, 58, 0.15);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-8px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  .site-header__nav--open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .brand-badge {
+    width: 6.7rem;
+    height: 4.2rem;
+  }
+
+  .brand-badge__label {
+    font-size: 0.95rem;
+  }
+
+  .brand-badge small {
+    display: none;
+  }
+
+  .site-header__link {
+    width: calc(50% - 0.6rem);
+  }
+}

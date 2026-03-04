@@ -1,0 +1,68 @@
+.specials {
+  --gap: 1rem;
+}
+
+.specials__viewport {
+  overflow: hidden;
+}
+
+.specials__track {
+  display: flex;
+  gap: var(--gap);
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.specials__card {
+  flex: 0 0 calc((100% - (var(--gap) * (var(--cards-per-view, 3) - 1))) / var(--cards-per-view, 3));
+  border: 1px solid rgba(20, 14, 24, 0.12);
+  border-radius: 1rem;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
+}
+
+.specials__card img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+
+.specials__card div {
+  padding: 1rem;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.specials__card h3 {
+  margin: 0;
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.4vw, 2.1rem);
+}
+
+.specials__card p {
+  margin: 0;
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+
+.specials__card strong {
+  color: var(--color-accent);
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+}
+
+.specials__controls {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.7rem;
+}
+
+.specials__controls button {
+  border: 1px solid rgba(20, 14, 24, 0.2);
+  background: transparent;
+  border-radius: 999px;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+}

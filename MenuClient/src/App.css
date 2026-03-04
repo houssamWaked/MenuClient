@@ -1,0 +1,42 @@
+.section-space {
+  padding-block: clamp(3rem, 8vw, 7rem);
+}
+
+.app-loader {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+}
+
+.app-loader__dot {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  border: 3px solid rgba(20, 14, 24, 0.2);
+  border-top-color: var(--color-accent);
+  animation: loaderSpin 0.85s linear infinite;
+}
+
+.app-error {
+  min-height: 100svh;
+  display: grid;
+  place-content: center;
+}
+
+.app-error h1 {
+  margin: 0;
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 6vw, 4rem);
+}
+
+.app-error p {
+  margin: 0.8rem 0 0;
+  color: var(--color-muted);
+}
+
+@keyframes loaderSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
