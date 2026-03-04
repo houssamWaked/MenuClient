@@ -1,8 +1,11 @@
-import { mediaLibrary, siteCopy } from '../../constants/string.js';
+import { useSiteData } from '../../context/site-data-context.js';
 import { SectionHeading } from '../common/SectionHeading.jsx';
 import './AboutSection.css';
 
 export function AboutSection() {
+  const { siteContent } = useSiteData();
+  const about = siteContent?.about ?? {};
+
   return (
     <section
       className="paper-section paper-section--tight about-section"
@@ -12,7 +15,7 @@ export function AboutSection() {
         <div className="about-collage" data-reveal="left">
           <img
             className="about-collage__primary"
-            src={mediaLibrary.aboutPrimary}
+            src={about.primaryImage ?? ''}
             alt="Portrait of a chef"
             loading="lazy"
           />
@@ -20,12 +23,12 @@ export function AboutSection() {
 
         <div className="about-copy" data-reveal="right">
           <SectionHeading
-            eyebrow={siteCopy.aboutEyebrow}
-            title={siteCopy.aboutTitle}
+            eyebrow={about.eyebrow ?? ''}
+            title={about.title ?? ''}
             align="left"
           />
-          <p className="about-copy__text">{siteCopy.aboutDescription}</p>
-          <p className="about-copy__signature">{siteCopy.aboutSignature}</p>
+          <p className="about-copy__text">{about.description ?? ''}</p>
+          <p className="about-copy__signature">{about.signature ?? ''}</p>
         </div>
       </div>
     </section>

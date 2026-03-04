@@ -1,15 +1,22 @@
-import { siteCopy, testimonials } from '../../constants/string.js';
+import { useSiteData } from '../../context/site-data-context.js';
 import { TestimonialCard } from '../cards/TestimonialCard.jsx';
 import { SectionHeading } from '../common/SectionHeading.jsx';
 import './TestimonialsSection.css';
 
 export function TestimonialsSection() {
+  const { siteContent, testimonials } = useSiteData();
+  const theme = siteContent?.theme ?? {};
+
+  if (testimonials.length === 0) {
+    return null;
+  }
+
   return (
     <section className="paper-section paper-section--tight" id="reviews">
       <div className="container">
         <SectionHeading
-          eyebrow={siteCopy.testimonialsEyebrow}
-          title={siteCopy.testimonialsTitle}
+          eyebrow={theme.testimonialsEyebrow ?? ''}
+          title={theme.testimonialsTitle ?? ''}
         />
 
         <div className="testimonial-feature" data-reveal="up">

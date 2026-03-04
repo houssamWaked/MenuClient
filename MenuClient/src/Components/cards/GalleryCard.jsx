@@ -11,7 +11,7 @@ export function GalleryCard({ image, index }) {
       data-reveal="zoom"
     >
       <img src={image.imageUrl} alt={`Burger gallery ${index + 1}`} loading="lazy" />
-      <span className="gallery-card__badge">Instagram</span>
+      <span className="gallery-card__badge">{image.label ?? 'Instagram'}</span>
     </a>
   );
 }

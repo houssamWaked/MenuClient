@@ -1,21 +1,24 @@
-import { mediaLibrary, siteCopy } from '../../constants/string.js';
+import { useSiteData } from '../../context/site-data-context.js';
 import './StorySection.css';
 
 export function StorySection() {
+  const { siteContent } = useSiteData();
+  const story = siteContent?.story ?? {};
+
   return (
     <section
       className="story-section"
       id="story"
-      style={{ '--story-image': `url(${mediaLibrary.storyBackground})` }}
+      style={{ '--story-image': `url(${story.backgroundImage ?? ''})` }}
     >
       <div className="story-section__overlay" />
       <div className="container story-section__content">
         <div className="story-copy" data-reveal="left">
           <h2>
-            <span>{siteCopy.storyTitleTop}</span>
-            <span>{siteCopy.storyTitleBottom}</span>
+            <span>{story.titleTop ?? ''}</span>
+            <span>{story.titleBottom ?? ''}</span>
           </h2>
-          <p>{siteCopy.storyDescription}</p>
+          <p>{story.description ?? ''}</p>
         </div>
         <div className="story-video-frame" data-reveal="right">
           <video
@@ -23,9 +26,9 @@ export function StorySection() {
             controls
             preload="metadata"
             playsInline
-            poster={mediaLibrary.storyBackground}
+            poster={story.backgroundImage ?? ''}
           >
-            <source src={mediaLibrary.storyVideoUrl} type="video/mp4" />
+            <source src={story.videoUrl ?? ''} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         </div>

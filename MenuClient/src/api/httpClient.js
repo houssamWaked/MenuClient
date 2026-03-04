@@ -5,7 +5,7 @@ const envBase =
     ? import.meta.env.VITE_API_BASE_URL.trim()
     : '';
 
-const baseURL = envBase || 'http://localhost:3000';
+const baseURL = (envBase || '').replace(/\/+$/, '');
 
 let authToken = null;
 
@@ -22,6 +22,7 @@ export const clearAuthToken = () => {
 export const http = axios.create({
   baseURL,
   headers: { 'Content-Type': 'application/json' },
+  timeout: 15_000,
 });
 
 http.interceptors.request.use((config) => {

@@ -61,6 +61,18 @@ async function cachedGet(url, { params, ttlMs = 60_000 } = {}) {
 }
 
 export const api = {
+  getPublicSite: async (slug) =>
+    cachedGet(endpoints.publicSite(slug), { ttlMs: 60_000 }),
+
+  submitPublicContact: async (slug, body) =>
+    (await http.post(endpoints.publicSiteContact(slug), body)).data,
+
+  subscribePublicNewsletter: async (slug, body) =>
+    (await http.post(endpoints.publicSiteNewsletter(slug), body)).data,
+
+  createPublicOrder: async (slug, body) =>
+    (await http.post(endpoints.publicSiteOrders(slug), body)).data,
+
   listTenants: async (type) =>
     cachedGet(endpoints.tenants(), {
       params: type ? { type } : undefined,

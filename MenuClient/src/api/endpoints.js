@@ -5,6 +5,10 @@
  */
 
 export const endpoints = {
+  publicSite: (slug) => `/api/v1/public/sites/${slug}`,
+  publicSiteContact: (slug) => `/api/v1/public/sites/${slug}/contact`,
+  publicSiteNewsletter: (slug) => `/api/v1/public/sites/${slug}/newsletter`,
+  publicSiteOrders: (slug) => `/api/v1/public/sites/${slug}/orders`,
   // ─── Tenants ────────────────────────────────────────────────────────────────
   tenants: () => '/api/v1/tenants',
   tenantById: (tenantId) => `/api/v1/tenants/${tenantId}`,

@@ -1,24 +1,24 @@
 import { SiteFooter } from '../Components/layout/SiteFooter.jsx';
 import { SiteHeader } from '../Components/layout/SiteHeader.jsx';
-import { footerLocations, mediaLibrary, siteCopy } from '../constants/string.js';
-import { useLandingData } from '../hooks/useLandingData.js';
+import { useSiteData } from '../context/site-data-context.js';
 import './ContactPage.css';
 
 export function ContactPage() {
-  const pageData = useLandingData();
-  const tenantName = pageData.tenant?.name ?? 'Burger Bachelor';
+  const { locations, siteContent } = useSiteData();
+  const contact = siteContent?.contact ?? {};
+  const theme = siteContent?.theme ?? {};
 
   return (
     <div className="site-shell contact-page-shell">
       <header
         className="contact-page-hero"
-        style={{ '--contact-banner-image': `url(${mediaLibrary.contactBanner})` }}
+        style={{ '--contact-banner-image': `url(${theme.pageBanners?.contact ?? ''})` }}
       >
         <div className="contact-page-hero__overlay" />
         <div className="container contact-page-hero__container">
-          <SiteHeader tenantName={tenantName} />
+          <SiteHeader />
           <div className="contact-page-hero__body" data-reveal="up">
-            <h1>{siteCopy.contactPageHeroTitle}</h1>
+            <h1>{theme.pageTitles?.contact ?? 'CONTACT'}</h1>
           </div>
         </div>
       </header>
@@ -27,18 +27,20 @@ export function ContactPage() {
         <section className="paper-section contact-section">
           <div className="container contact-section__grid">
             <div className="contact-section__intro" data-reveal="left">
-              <span className="section-eyebrow">{siteCopy.contactEyebrow}</span>
-              <h2>{siteCopy.contactTitle}</h2>
-              <p>{siteCopy.contactDescription}</p>
+              <span className="section-eyebrow">{contact.eyebrow ?? ''}</span>
+              <h2>{contact.title ?? ''}</h2>
+              <p>{contact.description ?? ''}</p>
 
               <div className="contact-section__locations" data-stagger>
-                {footerLocations.map((location) => (
-                  <article key={location.city} className="contact-location-card" data-reveal="up">
-                    <h3>{location.city}</h3>
+                {locations.map((location) => (
+                  <article key={location.id} className="contact-location-card" data-reveal="up">
+                    <h3>{location.heading}</h3>
                     <p>{location.addressLineOne}</p>
-                    <p>{location.addressLineTwo}</p>
-                    <a href={`mailto:${location.email}`}>{location.email}</a>
-                    <a href={`tel:${location.phone.replace(/\s+/g, '')}`}>{location.phone}</a>
+                    {location.addressLineTwo ? <p>{location.addressLineTwo}</p> : null}
+                    {location.email ? <a href={`mailto:${location.email}`}>{location.email}</a> : null}
+                    {location.phone ? (
+                      <a href={`tel:${location.phone.replace(/\s+/g, '')}`}>{location.phone}</a>
+                    ) : null}
                   </article>
                 ))}
               </div>
@@ -48,26 +50,26 @@ export function ContactPage() {
               <form className="contact-form" onSubmit={(event) => event.preventDefault()}>
                 <input
                   type="text"
-                  placeholder={siteCopy.contactNamePlaceholder}
-                  aria-label={siteCopy.contactNamePlaceholder}
+                  placeholder={contact.namePlaceholder ?? ''}
+                  aria-label={contact.namePlaceholder ?? 'Name'}
                 />
                 <input
                   type="email"
-                  placeholder={siteCopy.contactEmailPlaceholder}
-                  aria-label={siteCopy.contactEmailPlaceholder}
+                  placeholder={contact.emailPlaceholder ?? ''}
+                  aria-label={contact.emailPlaceholder ?? 'Email'}
                 />
                 <input
                   type="text"
-                  placeholder={siteCopy.contactSubjectPlaceholder}
-                  aria-label={siteCopy.contactSubjectPlaceholder}
+                  placeholder={contact.subjectPlaceholder ?? ''}
+                  aria-label={contact.subjectPlaceholder ?? 'Subject'}
                 />
                 <textarea
                   rows="7"
-                  placeholder={siteCopy.contactMessagePlaceholder}
-                  aria-label={siteCopy.contactMessagePlaceholder}
+                  placeholder={contact.messagePlaceholder ?? ''}
+                  aria-label={contact.messagePlaceholder ?? 'Message'}
                 />
                 <button className="button button--primary" type="submit">
-                  {siteCopy.contactSubmitButton}
+                  {contact.submitButton ?? ''}
                 </button>
               </form>
             </div>

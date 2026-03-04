@@ -1,5 +1,3 @@
-import { fallbackMenuItems } from '../constants/string.js';
-
 function slugifyLabel(value, fallback = 'menu-category') {
   return String(value ?? fallback)
     .toLowerCase()
@@ -89,8 +87,9 @@ export function resolveMenuItemId(item, index = 0) {
 }
 
 export function mapMenuItem(item, index, categoryIndex = null) {
-  const fallback = fallbackMenuItems[index % fallbackMenuItems.length];
-  const price = Number(item?.basePrice ?? item?.price ?? fallback.price);
+  const resolvedName = String(item?.name ?? `Menu Item ${index + 1}`);
+  const resolvedDescription = String(item?.description ?? '').trim();
+  const price = Number(item?.basePrice ?? item?.price);
   const rawCategoryId =
     item?.categoryId ??
     item?.category?.id ??
@@ -105,8 +104,7 @@ export function mapMenuItem(item, index, categoryIndex = null) {
     item?.menuCategory?.name ??
     item?.section?.name ??
     item?.sectionName ??
-    fallback.category ??
-    'Signature Burgers';
+    'Menu';
   const matchedCategory =
     (rawCategoryId != null
       ? categoryIndex?.byId?.get(String(rawCategoryId))
@@ -129,18 +127,18 @@ export function mapMenuItem(item, index, categoryIndex = null) {
         productId: item?.productId,
         menuItemId: item?.menuItemId,
         slug: item?.slug,
-        name: item?.name ?? fallback.name,
+        name: resolvedName,
         categoryName: category.name,
-        price: Number.isFinite(price) ? price : fallback.price,
-        imageUrl: item?.imageUrl ?? fallback.imageUrl,
+        price: Number.isFinite(price) ? price : 0,
+        imageUrl: item?.imageUrl ?? '',
       },
       index
     ),
-    name: item?.name ?? fallback.name,
-    description: item?.description ?? fallback.description,
-    price: Number.isFinite(price) ? price : fallback.price,
-    imageUrl: item?.imageUrl ?? fallback.imageUrl,
-    badge: item?.isFeatured ? 'Live Feature' : fallback.badge,
+    name: resolvedName,
+    description: resolvedDescription,
+    price: Number.isFinite(price) ? price : 0,
+    imageUrl: String(item?.imageUrl ?? '').trim(),
+    badge: item?.badge ?? (item?.isFeatured ? 'Featured' : ''),
     categoryId: category.id,
     categoryName: category.name,
     category,
@@ -157,8 +155,7 @@ export function groupMenuItemsByCategory(items, categories = []) {
   const groupByName = new Map(groups.map((group) => [group.name.trim().toLowerCase(), group]));
 
   items.forEach((item, index) => {
-    const fallbackCategoryName = fallbackMenuItems[index % fallbackMenuItems.length]?.category;
-    const categoryName = item?.category?.name ?? item?.categoryName ?? fallbackCategoryName ?? 'Signature Burgers';
+    const categoryName = item?.category?.name ?? item?.categoryName ?? 'Menu';
     const categoryId = item?.category?.id ?? item?.categoryId ?? slugifyLabel(categoryName, `group-${index + 1}`);
     const matchedGroup =
       groupById.get(String(categoryId)) ??

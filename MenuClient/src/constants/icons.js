@@ -1,47 +1,53 @@
-export const socialIcons = [
-  {
-    label: 'Instagram',
-    href: '#gallery',
+const socialGlyphs = {
+  instagram: {
     viewBox: '0 0 24 24',
     path: 'M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2.2A2.8 2.8 0 0 0 4.2 7v10A2.8 2.8 0 0 0 7 19.8h10a2.8 2.8 0 0 0 2.8-2.8V7A2.8 2.8 0 0 0 17 4.2H7Zm10.9 1.6a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2.2A2.8 2.8 0 1 0 12 14.8 2.8 2.8 0 0 0 12 9.2Z',
   },
-  {
-    label: 'X',
-    href: '#story',
+  x: {
     viewBox: '0 0 24 24',
     path: 'M18.9 2H22l-6.8 7.8L23 22h-6.2l-4.9-6.4L6.3 22H3.2l7.3-8.4L1 2h6.3l4.4 5.8L18.9 2Zm-1.1 18h1.7L6.4 3.9H4.6L17.8 20Z',
   },
-  {
-    label: 'Facebook',
-    href: '#reviews',
-    viewBox: '0 0 24 24',
-    path: 'M13.5 22v-8.4h2.8l.4-3.3h-3.2V8.2c0-.9.2-1.6 1.6-1.6h1.8V3.7c-.3 0-1.4-.1-2.6-.1-2.6 0-4.3 1.6-4.3 4.5v2.2H7.2v3.3h2.8V22h3.5Z',
-  },
-];
-
-export const footerSocialIcons = [
-  {
-    label: 'Instagram',
-    href: '#gallery',
-    viewBox: '0 0 24 24',
-    path: 'M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2.2A2.8 2.8 0 0 0 4.2 7v10A2.8 2.8 0 0 0 7 19.8h10a2.8 2.8 0 0 0 2.8-2.8V7A2.8 2.8 0 0 0 17 4.2H7Zm10.9 1.6a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2.2A2.8 2.8 0 1 0 12 14.8 2.8 2.8 0 0 0 12 9.2Z',
-  },
-  {
-    label: 'Twitter',
-    href: '#story',
+  twitter: {
     viewBox: '0 0 24 24',
     path: 'M22 5.8c-.7.3-1.5.5-2.3.6.8-.5 1.4-1.2 1.7-2.2-.8.5-1.7.8-2.7 1-1.5-1.6-4.2-1.7-5.8-.2-.8.8-1.2 1.8-1.2 2.9 0 .3 0 .6.1.9-3.2-.2-6.2-1.7-8.2-4.2-.4.6-.6 1.3-.6 2.1 0 1.4.7 2.7 1.9 3.5-.6 0-1.3-.2-1.8-.5 0 2 1.4 3.7 3.4 4.1-.6.2-1.3.2-1.9.1.5 1.7 2.1 2.9 4 2.9A8.4 8.4 0 0 1 2 18.6 11.8 11.8 0 0 0 8.3 20c7.6 0 11.7-6.3 11.7-11.7v-.5c.8-.5 1.5-1.2 2-2Z',
   },
-  {
-    label: 'Facebook',
-    href: '#reviews',
+  facebook: {
     viewBox: '0 0 24 24',
     path: 'M13.5 22v-8.4h2.8l.4-3.3h-3.2V8.2c0-.9.2-1.6 1.6-1.6h1.8V3.7c-.3 0-1.4-.1-2.6-.1-2.6 0-4.3 1.6-4.3 4.5v2.2H7.2v3.3h2.8V22h3.5Z',
   },
-  {
-    label: 'Google Plus',
-    href: '#contact',
+  google: {
     viewBox: '0 0 24 24',
     path: 'M12.2 10.4v3h5c-.2 1.3-1.5 3.7-5 3.7-3 0-5.5-2.5-5.5-5.6s2.5-5.6 5.5-5.6c1.7 0 2.8.7 3.5 1.3l2.4-2.4C16.6 3.4 14.7 2.5 12.2 2.5 7 2.5 2.8 6.8 2.8 12s4.2 9.5 9.4 9.5c5.4 0 9-3.8 9-9.1 0-.6-.1-1.1-.2-1.6h-8.8Zm10.5 0h-1.9V8.5H19v1.9h-1.9v1.8H19v1.9h1.8v-1.9h1.9v-1.8Z',
   },
-];
+};
+
+function resolveSocialGlyph(platform = '') {
+  const key = String(platform).trim().toLowerCase();
+
+  if (key in socialGlyphs) {
+    return socialGlyphs[key];
+  }
+
+  if (key === 'google plus' || key === 'google-plus' || key === 'gplus') {
+    return socialGlyphs.google;
+  }
+
+  return key === 'x-twitter' ? socialGlyphs.x : null;
+}
+
+export function buildSocialIcons(links = []) {
+  return links
+    .map((link) => {
+      const glyph = resolveSocialGlyph(link.platform ?? link.label);
+      if (!glyph) {
+        return null;
+      }
+
+      return {
+        ...glyph,
+        label: link.label,
+        href: link.href,
+      };
+    })
+    .filter(Boolean);
+}

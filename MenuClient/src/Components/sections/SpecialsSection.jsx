@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
+import { useSiteData } from '../../context/site-data-context.js';
 import { SpecialCard } from '../cards/SpecialCard.jsx';
 import './SpecialsSection.css';
 
 export function SpecialsSection({ items, currency }) {
+  const { siteContent } = useSiteData();
+  const theme = siteContent?.theme ?? {};
   const getCardsPerView = () => {
     if (typeof window === 'undefined') {
       return 3;
@@ -66,13 +69,17 @@ export function SpecialsSection({ items, currency }) {
     setActiveIndex(currentIndex >= maxIndex ? 0 : currentIndex + 1);
   };
 
+  if (items.length === 0) {
+    return null;
+  }
+
   return (
     <section className="specials-section" id="specials">
       <div className="container specials-section__inner">
         <div className="specials-section__head" data-reveal="up">
           <div>
-            <span className="specials-section__eyebrow">Featured Picks</span>
-            <h2>More Special Burgers</h2>
+            <span className="specials-section__eyebrow">{theme.specialsEyebrow ?? ''}</span>
+            <h2>{theme.specialsTitle ?? ''}</h2>
           </div>
 
           <div className="specials-section__controls" aria-label="Specials carousel controls">

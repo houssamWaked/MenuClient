@@ -1,18 +1,23 @@
-import { navLinks, siteCopy } from '../../constants/string.js';
-import { socialIcons } from '../../constants/icons.js';
+import { buildSocialIcons } from '../../constants/icons.js';
 import { useCart } from '../../context/cart-context.js';
+import { useSiteData } from '../../context/site-data-context.js';
 import { SocialIcon } from '../common/SocialIcon.jsx';
 import './SiteHeader.css';
 
-export function SiteHeader({ tenantName }) {
+export function SiteHeader() {
+  const { tenant, navigation, socialLinks, primaryLocation, siteContent } = useSiteData();
   const { itemCount, toggleCart } = useCart();
+  const theme = siteContent?.theme ?? {};
+  const tenantName = tenant?.name ?? '';
   const brandText = tenantName
     ? tenantName
       .split(/\s+/)
       .filter(Boolean)
       .slice(0, 2)
       .join(' ')
-    : 'Burger Bachelor';
+    : '';
+  const socialIcons = buildSocialIcons(socialLinks);
+  const phone = primaryLocation?.phone ?? '';
   const currentPath = window.location.pathname.toLowerCase();
   const currentHash = window.location.hash.toLowerCase();
   const currentRoute = `${currentPath}${currentHash}`;
@@ -43,7 +48,7 @@ export function SiteHeader({ tenantName }) {
     <div className="topbar">
       <div className="topbar__inner">
         <nav className="nav">
-          {navLinks.map((link) => (
+          {navigation.map((link) => (
             <a
               key={link.href}
               href={link.href}
@@ -58,10 +63,10 @@ export function SiteHeader({ tenantName }) {
         <a
           className="brand-badge"
           href="/"
-          aria-label={`${tenantName ?? 'Burger Bachelor'} home`}
+          aria-label={`${tenantName || 'Home'} home`}
         >
           <span className="brand-badge__bun" />
-          <span className="brand-badge__eyebrow">Flame Crafted</span>
+          <span className="brand-badge__eyebrow">{theme.brandEyebrow ?? ''}</span>
           <span className="brand-badge__text">{brandText}</span>
         </a>
 
@@ -78,12 +83,10 @@ export function SiteHeader({ tenantName }) {
             onClick={toggleCart}
           >
             <span className="cart-chip__icon" aria-hidden="true" />
-            <span className="cart-chip__label">Cart</span>
+            <span className="cart-chip__label">{theme.cartLabel ?? ''}</span>
             <span className="cart-chip__count">{itemCount}</span>
           </button>
-          <a className="phone-chip" href="/contact">
-            {siteCopy.phone}
-          </a>
+          {phone ? <a className="phone-chip" href={`tel:${phone.replace(/\s+/g, '')}`}>{phone}</a> : null}
         </div>
       </div>
     </div>

@@ -62,7 +62,17 @@
   object-fit: cover;
 }
 
+@media (max-width: 1024px) {
+  .story-section {
+    padding: 108px 0;
+  }
+}
+
 @media (max-width: 820px) {
+  .story-section__content {
+    gap: 24px;
+  }
+
   .story-video-frame {
     padding: 10px;
   }
@@ -71,5 +81,18 @@
 @media (max-width: 640px) {
   .story-section {
     padding: 82px 0;
+  }
+
+  .story-copy p {
+    font-size: clamp(1.2rem, 7vw, 1.6rem);
+  }
+
+  .story-video-frame {
+    padding: 8px;
+    border-radius: 24px;
+  }
+
+  .story-video {
+    border-radius: 18px;
   }
 }

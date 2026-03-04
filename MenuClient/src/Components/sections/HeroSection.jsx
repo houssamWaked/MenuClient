@@ -1,19 +1,22 @@
 import { useEffect, useState } from 'react';
-import { mediaLibrary, siteCopy } from '../../constants/string.js';
+import { useSiteData } from '../../context/site-data-context.js';
 import { SiteHeader } from '../layout/SiteHeader.jsx';
 import './HeroSection.css';
 
-export function HeroSection({ tenantName, tenantSlug, loading, error }) {
-  const heroImages = mediaLibrary.heroBackgrounds?.length
-    ? mediaLibrary.heroBackgrounds
-    : [mediaLibrary.heroBackground];
+export function HeroSection() {
+  const { loading, error, tenant, siteContent } = useSiteData();
+  const hero = siteContent?.hero ?? {};
+  const heroImages = (Array.isArray(hero.slides) ? hero.slides : [])
+    .map((entry) => String(entry ?? '').trim())
+    .filter(Boolean);
   const [activeSlide, setActiveSlide] = useState(0);
+  const tenantSlug = tenant?.slug ?? '';
   const heroStatus = loading
     ? 'Syncing live menu'
     : error
       ? 'Preview mode'
-      : tenantName
-        ? `Live tenant: ${tenantName}`
+      : tenant?.name
+        ? `Live tenant: ${tenant.name}`
         : 'Static preview';
 
   useEffect(() => {
@@ -51,17 +54,17 @@ export function HeroSection({ tenantName, tenantSlug, loading, error }) {
       </div>
       <div className="hero__scrim" />
       <div className="container">
-        <SiteHeader tenantName={tenantName} />
+        <SiteHeader />
 
         <div className="hero__body">
           <div className="hero__content" data-stagger>
             <span className="paint-badge" data-reveal="zoom">
-              {siteCopy.heroEyebrow}
+              {hero.eyebrow ?? ''}
             </span>
             <h1 className="hero__title" data-reveal="up">
-              <span>{siteCopy.heroTitleTop}</span>
-              <span>{siteCopy.heroTitleMiddle}</span>
-              <em>{tenantSlug ?? siteCopy.heroTitleAccent}</em>
+              <span>{hero.titleTop ?? ''}</span>
+              <span>{hero.titleMiddle ?? ''}</span>
+              <em>{hero.accent ?? tenantSlug}</em>
             </h1>
 
             {error ? (
@@ -73,43 +76,47 @@ export function HeroSection({ tenantName, tenantSlug, loading, error }) {
         </div>
       </div>
 
-      <button
-        className="hero__arrow hero__arrow--left"
-        type="button"
-        aria-label="Previous slide"
-        onClick={goToPreviousSlide}
-        data-reveal="zoom"
-        style={{ '--reveal-delay': '280ms' }}
-      >
-        {'<'}
-      </button>
-      <button
-        className="hero__arrow hero__arrow--right"
-        type="button"
-        aria-label="Next slide"
-        onClick={goToNextSlide}
-        data-reveal="zoom"
-        style={{ '--reveal-delay': '340ms' }}
-      >
-        {'>'}
-      </button>
-
-      <div
-        className="hero__pagination"
-        aria-label="Hero image navigation"
-        data-reveal="up"
-        style={{ '--reveal-delay': '420ms' }}
-      >
-        {heroImages.map((imageUrl, index) => (
+      {heroImages.length > 1 ? (
+        <>
           <button
-            key={imageUrl}
-            className={`hero__dot${index === activeSlide ? ' is-active' : ''}`}
+            className="hero__arrow hero__arrow--left"
             type="button"
-            aria-label={`Go to slide ${index + 1}`}
-            onClick={() => setActiveSlide(index)}
-          />
-        ))}
-      </div>
+            aria-label="Previous slide"
+            onClick={goToPreviousSlide}
+            data-reveal="zoom"
+            style={{ '--reveal-delay': '280ms' }}
+          >
+            {'<'}
+          </button>
+          <button
+            className="hero__arrow hero__arrow--right"
+            type="button"
+            aria-label="Next slide"
+            onClick={goToNextSlide}
+            data-reveal="zoom"
+            style={{ '--reveal-delay': '340ms' }}
+          >
+            {'>'}
+          </button>
+
+          <div
+            className="hero__pagination"
+            aria-label="Hero image navigation"
+            data-reveal="up"
+            style={{ '--reveal-delay': '420ms' }}
+          >
+            {heroImages.map((imageUrl, index) => (
+              <button
+                key={imageUrl}
+                className={`hero__dot${index === activeSlide ? ' is-active' : ''}`}
+                type="button"
+                aria-label={`Go to slide ${index + 1}`}
+                onClick={() => setActiveSlide(index)}
+              />
+            ))}
+          </div>
+        </>
+      ) : null}
     </header>
-  ); //s
+  );
 }

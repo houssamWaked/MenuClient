@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { siteCopy } from '../../constants/string.js';
+import { useSiteData } from '../../context/site-data-context.js';
 import { MenuCard } from '../cards/MenuCard.jsx';
 import { SectionHeading } from '../common/SectionHeading.jsx';
 import { MenuItemDialog } from '../common/MenuItemDialog.jsx';
@@ -15,6 +15,8 @@ export function MenuSection({
   moreHref = '/menu',
 }) {
   const [activeItem, setActiveItem] = useState(null);
+  const { siteContent } = useSiteData();
+  const theme = siteContent?.theme ?? {};
   const categoryGroups = groupByCategory ? groupMenuItemsByCategory(items, categories) : [];
 
   return (
@@ -22,8 +24,8 @@ export function MenuSection({
       <section className="paper-section menu-section" id="menu">
         <div className="container">
           <SectionHeading
-            eyebrow={siteCopy.menuEyebrow}
-            title={siteCopy.menuTitle}
+            eyebrow={theme.menuEyebrow ?? ''}
+            title={theme.menuTitle ?? ''}
           />
 
           {groupByCategory ? (
@@ -48,7 +50,7 @@ export function MenuSection({
                   <section key={group.id} className="menu-category" id={group.anchorId} data-reveal="up">
                     <div className="menu-category__heading">
                       <div>
-                        <span className="menu-category__eyebrow">Category</span>
+                        <span className="menu-category__eyebrow">{theme.menuCategoryEyebrow ?? ''}</span>
                         <h3>{group.name}</h3>
                       </div>
                       <span className="menu-category__count">{`${group.items.length} items`}</span>
@@ -88,7 +90,7 @@ export function MenuSection({
               style={{ '--reveal-delay': '320ms' }}
             >
               <a className="menu-section__more-link" href={moreHref}>
-                {siteCopy.specialsEyebrow}
+                {theme.moreItemsLabel ?? ''}
               </a>
             </div>
           ) : null}

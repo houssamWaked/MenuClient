@@ -35,7 +35,7 @@
 }
 
 .nav {
-  gap: 18px;
+  gap: 14px 18px;
   flex-wrap: wrap;
   min-height: 96px;
   align-items: center;
@@ -49,7 +49,7 @@
   gap: 4px;
   position: relative;
   padding-bottom: 10px;
-  font-size: 0.98rem;
+  font-size: 0.94rem;
   font-weight: 700;
   color: rgba(255, 249, 241, 0.9);
   transition:
@@ -229,7 +229,7 @@
 
 .topbar__actions {
   justify-content: flex-end;
-  gap: 16px;
+  gap: 12px;
   flex-wrap: wrap;
   min-height: 96px;
   animation: header-rise 760ms var(--motion-ease-soft) both;
@@ -305,39 +305,88 @@
   box-shadow: 0 12px 20px rgba(244, 90, 42, 0.22);
 }
 
-@media (max-width: 1080px) {
+@media (max-width: 1280px) {
   .topbar__inner {
-    justify-items: center;
-    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 0 18px;
   }
 
-  .nav,
+  .nav {
+    gap: 12px 16px;
+  }
+
+  .nav a {
+    font-size: 0.9rem;
+  }
+
+  .brand-badge {
+    width: 162px;
+    min-height: 98px;
+    padding: 11px 14px 17px;
+  }
+
+  .brand-badge__text {
+    max-width: 112px;
+    font-size: 1.34rem;
+  }
+
   .topbar__actions {
-    justify-content: center;
+    gap: 10px;
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 1080px) {
+  .topbar {
+    padding-bottom: 16px;
+  }
+
   .topbar__inner {
-    gap: 14px;
+    gap: 12px;
+    justify-items: center;
+    grid-template-columns: 1fr;
+    padding: 0 16px;
+  }
+
+  .brand-badge {
+    order: 1;
+  }
+
+  .nav {
+    order: 2;
+    min-height: auto;
+    justify-content: center;
+    padding-top: 4px;
+  }
+
+  .topbar__actions {
+    order: 3;
+    min-height: auto;
+    justify-content: center;
+    padding-bottom: 4px;
+  }
+}
+
+@media (max-width: 760px) {
+  .topbar__inner {
+    gap: 10px;
     padding: 0 12px;
   }
 
   .nav {
-    gap: 16px;
+    gap: 10px 14px;
     justify-content: center;
-    min-height: auto;
     padding-top: 12px;
   }
 
   .nav a {
-    font-size: 0.92rem;
+    font-size: 0.86rem;
+    padding-bottom: 8px;
   }
 
   .brand-badge {
-    width: 154px;
+    width: 148px;
     min-height: 94px;
-    padding: 11px 12px 16px;
+    padding: 10px 12px 16px;
   }
 
   .brand-badge__eyebrow {
@@ -346,13 +395,13 @@
   }
 
   .brand-badge__text {
-    max-width: 108px;
-    font-size: 1.24rem;
+    max-width: 104px;
+    font-size: 1.16rem;
   }
 
   .topbar__actions {
-    min-height: auto;
-    padding-bottom: 12px;
+    gap: 10px;
+    padding-bottom: 10px;
   }
 
   .cart-chip {
@@ -366,6 +415,76 @@
   .cart-chip__count {
     min-width: 24px;
     padding: 5px 7px;
+  }
+}
+
+@media (max-width: 560px) {
+  .topbar {
+    padding-bottom: 12px;
+  }
+
+  .nav {
+    max-width: 360px;
+    gap: 10px 12px;
+  }
+
+  .topbar__actions {
+    width: min(100%, 360px);
+    justify-content: center;
+  }
+
+  .social-links {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .phone-chip,
+  .cart-chip {
+    flex: 1 1 150px;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 420px) {
+  .topbar__inner {
+    padding: 0 10px;
+  }
+
+  .nav {
+    max-width: 300px;
+    gap: 8px 12px;
+  }
+
+  .nav a {
+    font-size: 0.8rem;
+  }
+
+  .brand-badge {
+    width: 138px;
+    min-height: 88px;
+  }
+
+  .brand-badge__bun {
+    width: 48px;
+    height: 22px;
+  }
+
+  .brand-badge__text {
+    max-width: 96px;
+    font-size: 1.08rem;
+  }
+
+  .topbar__actions {
+    width: min(100%, 320px);
+    gap: 8px;
+  }
+
+  .cart-chip {
+    gap: 8px;
+  }
+
+  .cart-chip__label {
+    display: none;
   }
 }
 

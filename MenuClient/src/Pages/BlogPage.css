@@ -32,12 +32,14 @@
   font-size: clamp(4.2rem, 10vw, 6.4rem);
   font-weight: 900;
   letter-spacing: 0.02em;
+  text-align: center;
 }
 
 .blog-page-hero__body--post {
   max-width: 900px;
   gap: 14px;
   text-align: center;
+  padding-inline: 12px;
 }
 
 .blog-post-hero__category {
@@ -197,6 +199,17 @@
   margin-top: 18px;
 }
 
+@media (max-width: 980px) {
+  .blog-page-hero,
+  .blog-page-hero__body {
+    min-height: 390px;
+  }
+
+  .blog-grid {
+    gap: 22px;
+  }
+}
+
 @media (max-width: 1080px) {
   .blog-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -225,5 +238,19 @@
 
   .blog-post-card {
     padding: 22px;
+  }
+}
+
+@media (max-width: 480px) {
+  .blog-page-hero__body h1 {
+    font-size: clamp(3rem, 14vw, 4rem);
+  }
+
+  .blog-post-hero__category {
+    font-size: clamp(1.6rem, 9vw, 2rem);
+  }
+
+  .blog-post-lead {
+    font-size: 1.05rem;
   }
 }
