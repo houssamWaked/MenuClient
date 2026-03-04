@@ -6,10 +6,7 @@ const envBase =
     : '';
 
 const normalizedEnvBase = (envBase || '').replace(/\/+$/, '');
-const baseURL =
-  typeof window === 'undefined'
-    ? normalizedEnvBase
-    : '';
+const baseURL = normalizedEnvBase || '';
 
 let authToken = null;
 
