@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 import { api } from '../api/index.js';
 import { extractCollection, extractSingle } from '../utils/landing.js';
-import { hasFreshSiteCache, loadSiteCache, persistSiteCache } from '../utils/site-cache.js';
+import {
+  hasFreshSiteCache,
+  loadSiteCache,
+  persistSiteCache,
+} from '../utils/site-cache.js';
 import {
   getPrimaryLocation,
   normalizeBlogPosts,
@@ -37,10 +41,10 @@ const initialState = {
 function hasLiveContent(data) {
   return Boolean(
     data?.tenant ||
-      data?.navigation?.length ||
-      data?.items?.length ||
-      data?.locations?.length ||
-      data?.siteContent
+    data?.navigation?.length ||
+    data?.items?.length ||
+    data?.locations?.length ||
+    data?.siteContent
   );
 }
 
@@ -58,8 +62,11 @@ function hydrateCachedState(cachedData) {
 }
 
 export function useLandingData() {
-  const tenantSlug = import.meta.env.VITE_TENANT_SLUG?.trim() || 'burger-bachelor';
-  const [pageData, setPageData] = useState(() => hydrateCachedState(loadSiteCache(tenantSlug)));
+  const tenantSlug =
+    import.meta.env.VITE_TENANT_SLUG?.trim() || 'burger-bachelor';
+  const [pageData, setPageData] = useState(() =>
+    hydrateCachedState(loadSiteCache(tenantSlug))
+  );
 
   useEffect(() => {
     let cancelled = false;
@@ -78,7 +85,9 @@ export function useLandingData() {
         }
 
         const siteContent =
-          site?.siteContent && typeof site.siteContent === 'object' ? site.siteContent : {};
+          site?.siteContent && typeof site.siteContent === 'object'
+            ? site.siteContent
+            : {};
         const tenant = site?.tenant ?? null;
         const locations = normalizeLocations(site?.locations);
         const primaryLocation = getPrimaryLocation(locations);
@@ -120,9 +129,10 @@ export function useLandingData() {
         }
       } catch (error) {
         const resolvedMessage =
-          typeof error?.response?.data?.message === 'string' && error.response.data.message.trim()
+          typeof error?.response?.data?.message === 'string' &&
+          error.response.data.message.trim()
             ? error.response.data.message.trim()
-            : error?.message ?? 'Unable to reach the backend right now.';
+            : (error?.message ?? 'Unable to reach the backend right now.');
 
         console.error('[SiteData] Failed to load public site', {
           tenantSlug,
@@ -180,6 +190,6 @@ export function useLandingData() {
       cancelled = true;
     };
   }, [tenantSlug]);
-
+  //s
   return pageData;
 }
