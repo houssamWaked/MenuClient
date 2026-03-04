@@ -6,7 +6,15 @@ function normalizeApiOrigin() {
     globalThis.process?.env?.VITE_API_BASE_URL?.trim() ||
     '';
 
-  return rawValue.replace(/\/+$/, '').replace(/\/api$/, '');
+  const normalizedValue = rawValue.replace(/\/+$/, '').replace(/\/api$/, '');
+
+  if (!normalizedValue) {
+    return '';
+  }
+
+  return /^[a-z][a-z\d+\-.]*:\/\//i.test(normalizedValue)
+    ? normalizedValue
+    : `https://${normalizedValue}`;
 }
 
 function appendQueryParams(url, query = {}) {

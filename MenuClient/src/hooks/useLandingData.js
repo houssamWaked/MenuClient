@@ -73,6 +73,10 @@ export function useLandingData() {
 
       try {
         const site = extractSingle(await api.getPublicSite(tenantSlug));
+        if (!site?.tenant || typeof site.tenant !== 'object') {
+          throw new Error('Invalid site payload received from the backend.');
+        }
+
         const siteContent =
           site?.siteContent && typeof site.siteContent === 'object' ? site.siteContent : {};
         const tenant = site?.tenant ?? null;
@@ -119,6 +123,18 @@ export function useLandingData() {
           typeof error?.response?.data?.message === 'string' && error.response.data.message.trim()
             ? error.response.data.message.trim()
             : error?.message ?? 'Unable to reach the backend right now.';
+
+        console.error('[SiteData] Failed to load public site', {
+          tenantSlug,
+          hasCachedContent,
+          message: resolvedMessage,
+          requestUrl:
+            typeof error?.config?.url === 'string'
+              ? error.config.url
+              : `/api/v1/public/sites/${tenantSlug}`,
+          status: error?.response?.status ?? null,
+          responseData: error?.response?.data ?? null,
+        });
 
         if (!cancelled) {
           if (hasCachedContent) {
