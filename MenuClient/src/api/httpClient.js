@@ -5,7 +5,7 @@ const envBase =
     ? import.meta.env.VITE_API_BASE_URL.trim()
     : '';
 
-const baseURL = envBase || 'http://localhost:3000';
+const baseURL = envBase || 'http://localhost:3001';
 
 let authToken = null;
 
