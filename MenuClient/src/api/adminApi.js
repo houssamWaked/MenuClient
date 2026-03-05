@@ -81,6 +81,11 @@ export async function updateTenantAdmin(tenantId, adminUserId, body) {
   return unwrap(response);
 }
 
+export async function deleteTenantAdmin(tenantId, adminUserId) {
+  const response = await http.delete(`/api/v1/admin/tenants/${tenantId}/admin-users/${adminUserId}`);
+  return unwrap(response);
+}
+
 export async function createMenu(tenantId, body) {
   const response = await http.post(`/api/v1/admin/tenants/${tenantId}/menus`, body);
   return unwrap(response);
