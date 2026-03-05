@@ -24,8 +24,8 @@ export function clearAdminSession() {
   clearAuthToken();
 }
 
-export async function adminLogin(username, password) {
-  const response = await http.post('/api/v1/admin/login', { username, password });
+export async function adminLogin(email, password) {
+  const response = await http.post('/api/v1/admin/login', { email, password });
   const data = unwrap(response);
   if (data?.token) {
     localStorage.setItem(TOKEN_STORAGE_KEY, data.token);
@@ -34,18 +34,8 @@ export async function adminLogin(username, password) {
   return data;
 }
 
-export async function tenantAdminLogin(tenantSlug, email, password) {
-  const response = await http.post('/api/v1/admin/tenant/login', {
-    tenantSlug,
-    email,
-    password,
-  });
-  const data = unwrap(response);
-  if (data?.token) {
-    localStorage.setItem(TOKEN_STORAGE_KEY, data.token);
-    setAuthToken(data.token);
-  }
-  return data;
+export async function tenantAdminLogin(email, password) {
+  return adminLogin(email, password);
 }
 
 export async function fetchAdminSession() {
@@ -61,6 +51,11 @@ export async function fetchMyDashboard() {
 export async function fetchTenants() {
   const response = await http.get('/api/v1/admin/tenants');
   return unwrap(response) ?? [];
+}
+
+export async function createTenant(body) {
+  const response = await http.post('/api/v1/tenants', body);
+  return unwrap(response);
 }
 
 export async function fetchTenantDashboard(tenantId) {

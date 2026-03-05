@@ -73,6 +73,12 @@
   line-height: 1.6;
 }
 
+.admin-login__mode-switch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
+}
+
 .admin-login__card label {
   display: grid;
   gap: 0.38rem;
@@ -99,6 +105,21 @@
 
 .admin-login__card button:disabled {
   opacity: 0.65;
+}
+
+.admin-login__card .admin-login__mode-switch button {
+  border: 1px solid rgba(22, 50, 74, 0.2);
+  border-radius: 0.65rem;
+  padding: 0.55rem 0.7rem;
+  font-weight: 700;
+  color: #25435b;
+  background: rgba(244, 248, 251, 0.95);
+}
+
+.admin-login__card .admin-login__mode-switch button.is-active {
+  color: white;
+  border-color: rgba(31, 156, 136, 0.8);
+  background: linear-gradient(135deg, #1f9c88, #187c6d);
 }
 
 .admin-login__error {
@@ -350,6 +371,15 @@
   grid-template-columns: 180px 1fr 120px 1fr auto auto auto auto;
 }
 
+.admin-row--admin {
+  grid-template-columns: 1fr 1fr 140px auto 180px 220px 90px;
+}
+
+.admin-row__hint {
+  color: #4f687f;
+  font-size: 0.8rem;
+}
+
 .admin-content-editor {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -406,7 +436,8 @@
   }
 
   .admin-row,
-  .admin-row--item {
+  .admin-row--item,
+  .admin-row--admin {
     grid-template-columns: 1fr;
   }
 

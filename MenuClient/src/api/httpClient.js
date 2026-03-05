@@ -17,12 +17,34 @@ function normalizeBaseUrl(value) {
   return `https://${trimmed}`;
 }
 
+function isLoopbackHost(value) {
+  if (typeof value !== 'string' || !value) {
+    return false;
+  }
+
+  try {
+    const url = new URL(value);
+    const host = url.hostname.toLowerCase();
+    return host === 'localhost' || host === '127.0.0.1' || host === '0.0.0.0';
+  } catch {
+    return false;
+  }
+}
+
 const envBase =
   typeof import.meta.env?.VITE_API_BASE_URL === 'string'
     ? normalizeBaseUrl(import.meta.env.VITE_API_BASE_URL)
     : '';
 
-const baseURL = envBase || 'http://localhost:3001';
+const defaultProductionApi = 'https://menuapi-production.up.railway.app';
+const defaultDevelopmentApi = 'http://localhost:3001';
+const usingProdUnsafeLocalEnv = !import.meta.env.DEV && isLoopbackHost(envBase);
+const baseURL =
+  envBase && !usingProdUnsafeLocalEnv
+    ? envBase
+    : import.meta.env.DEV
+      ? defaultDevelopmentApi
+      : defaultProductionApi;
 
 let authToken = null;
 
