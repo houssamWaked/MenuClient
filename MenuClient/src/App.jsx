@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import './App.css';
 import { publicSiteApi } from './api/publicSite.js';
-import { DEFAULT_SLUG, FALLBACK_CONTENT } from './siteData.js';
+import { DEFAULT_SLUG } from './siteData.js';
 import { buildViewModel, getInitialSlug, parseError, toArray } from './siteHelpers.js';
 import { PageBanner } from './components/common/PageBanner.jsx';
 import { Footer } from './components/layout/Footer.jsx';
@@ -180,31 +180,33 @@ function App() {
   }
 
   const heroSlides = toArray(view.hero.slides);
-  const currentSlide = heroSlides[0] || FALLBACK_CONTENT.hero.slides[0];
+  const currentSlide = heroSlides[0] || view.story.backgroundImage || '';
   const pageKey = pathname.slice(1);
-  const bannerImage = view.theme.pageBanners?.[pageKey] || view.story.backgroundImage;
-  const pageTitle = view.theme.pageTitles?.[pageKey] || 'Experience';
-  const pageDescriptions = {
-    about: view.theme.aboutDescription || view.about.description,
-    blog: view.theme.blogDescription,
-    contact: view.contact.description,
-    cart: 'Review your selected dishes, adjust quantities, and continue to reservation in seconds.',
-    terms: 'Read the rules that govern access to the website, reservations, orders, and published menu information.',
-    privacy:
-      'Understand what information we collect, how it is used, and the choices available to visitors.',
-  };
-  const bannerDescription = pageDescriptions[pageKey] || view.story.description;
-  const cartPageTitle = view.theme.pageTitles?.cart || 'Your Cart';
+  const bannerImage =
+    view.theme.pageBanners?.[pageKey] || view.story.backgroundImage || heroSlides[0] || '';
+  const pageTitle = view.theme.pageTitles?.[pageKey] || '';
+  const legalIntro =
+    pageKey === 'terms'
+      ? view.legal.terms?.intro
+      : pageKey === 'privacy'
+        ? view.legal.privacy?.intro
+        : '';
+  const bannerDescription =
+    view.theme.pageDescriptions?.[pageKey] ||
+    legalIntro ||
+    view.contact.description ||
+    view.about.description ||
+    view.story.description ||
+    '';
+  const cartPageTitle = view.theme.pageTitles?.cart || pageTitle;
 
-  const menuHeroTitle = view.theme.menuPageTitle || 'Our Delicious Food Menu';
-  const menuHeroSubtitle =
-    view.theme.menuPageSubtitle || 'Exclusive Affair of Exceptional Flavors Where Every Bite Tells a Story,';
+  const menuHeroTitle = view.theme.menuPageTitle || pageTitle;
+  const menuHeroSubtitle = view.theme.menuPageSubtitle || view.theme.pageDescriptions?.menu || '';
 
   const homeMenuSections = view.menuSections.slice(0, 4);
-  const homeMenuDescription =
-    view.theme.menuDescription ||
-    'Where every bite tells a story crafted with intention, steeped in heritage, and designed to leave a lasting impression';
+  const homeMenuDescription = view.theme.menuDescription || '';
   const homeMenuImage =
+    homeMenuSections[0]?.imageUrl ||
     view.specials[0]?.imageUrl ||
     view.featuredItems[0]?.imageUrl ||
     view.items[0]?.imageUrl ||
@@ -216,26 +218,19 @@ function App() {
         title: item.name,
         imageUrl: item.imageUrl,
       }));
-  const signatureDescription =
-    view.theme.specialsDescription ||
-    'Savor the moment with our exquisite dishes crafted with passion and the finest ingredients.';
+  const signatureDescription = view.theme.specialsDescription || '';
 
-  const ambianceItems = view.gallery.length ? view.gallery : view.specials;
-  const ambianceDescription =
-    view.theme.galleryDescription ||
-    'Where gilded whispers and candlelight compose an evening of warmth, elegance, and quiet allure.';
+  const ambianceItems = view.gallery;
+  const ambianceDescription = view.theme.galleryDescription || '';
 
-  const aboutDescription =
-    view.theme.aboutDescription ||
-    'Discover the story behind our passion for refined cuisine & exquisite ambiance';
+  const aboutDescription = view.theme.aboutDescription || view.about.description || '';
 
-  const testimonialsTitle = view.theme.testimonialsTitle || 'Dining Testimonials';
-  const testimonialsDescription =
-    view.theme.testimonialsDescription ||
-    'Where Every Review is a Testament to Excellence, and Every Visit Becomes a Legend';
+  const testimonialsTitle = view.theme.testimonialsTitle || '';
+  const testimonialsDescription = view.theme.testimonialsDescription || '';
 
   const reservationProps = {
     reservationRef,
+    reservation: view.reservation,
     orderForm,
     onOrderFormChange: handleOrderFormChange,
     locations: view.locations,
@@ -292,6 +287,7 @@ function App() {
         menuHeroTitle={menuHeroTitle}
         menuHeroSubtitle={menuHeroSubtitle}
         view={view}
+        theme={view.theme}
         signatureDishes={signatureDishes}
         signatureDescription={signatureDescription}
         ambianceItems={ambianceItems}
@@ -342,6 +338,7 @@ function App() {
         bannerImage={bannerImage}
         pageTitle={cartPageTitle}
         bannerDescription={bannerDescription}
+        theme={view.theme}
         onNavigate={navigate}
         onBook={scrollToReservation}
         {...cartProps}
@@ -353,6 +350,7 @@ function App() {
         bannerImage={bannerImage}
         pageTitle={pageTitle}
         bannerDescription={bannerDescription}
+        legal={view.legal.terms}
       />
     );
   } else if (pathname === '/privacy') {
@@ -361,6 +359,7 @@ function App() {
         bannerImage={bannerImage}
         pageTitle={pageTitle}
         bannerDescription={bannerDescription}
+        legal={view.legal.privacy}
       />
     );
   } else {
@@ -383,6 +382,9 @@ function App() {
         onBook={scrollToReservation}
         isHome={isHome}
         cartCount={cartCount}
+        navigationItems={view.theme.navigation}
+        bookLabel={view.theme.bookButtonLabel}
+        cartLabel={view.theme.cartLabel}
       />
 
       <main>
@@ -406,6 +408,7 @@ function App() {
         onNewsletterEmailChange={setNewsletterEmail}
         onNewsletterSubmit={handleNewsletterSubmit}
         newsletterStatus={newsletterStatus}
+        socialLinks={view.socialLinks}
       />
     </div>
   );

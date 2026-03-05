@@ -41,13 +41,13 @@ export function HomeHero({ currentSlide, hero, description, onBook, onExploreMen
           <p>{description}</p>
           <div className="hero-actions">
             <button type="button" className="hero-btn hero-btn-primary" onClick={onBook}>
-              <span>Book A Table</span>
+              <span>{hero?.primaryCta?.label}</span>
               <span className="hero-btn-icon" aria-hidden="true">
                 <ArrowIcon />
               </span>
             </button>
             <button type="button" className="hero-btn hero-btn-secondary" onClick={onExploreMenu}>
-              <span>Explore Menu</span>
+              <span>{hero?.secondaryCta?.label}</span>
               <span className="hero-btn-icon" aria-hidden="true">
                 <ArrowIcon />
               </span>

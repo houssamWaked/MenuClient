@@ -7,6 +7,7 @@ export function MenuPage({
   menuHeroTitle,
   menuHeroSubtitle,
   view,
+  theme,
   currencyFormatter,
   onAddToCart,
   cartQuantities,
@@ -26,7 +27,7 @@ export function MenuPage({
 
       <MenuSection
         menuSections={view.menuSections}
-        items={view.items}
+        theme={theme}
         currencyFormatter={currencyFormatter}
         onAddToCart={onAddToCart}
         cartQuantities={cartQuantities}

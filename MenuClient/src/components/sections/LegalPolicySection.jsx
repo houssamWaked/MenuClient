@@ -1,4 +1,6 @@
 export function LegalPolicySection({ eyebrow, intro, sections }) {
+  if (!Array.isArray(sections) || !sections.length) return null;
+
   return (
     <section className="content-shell section legal-page-wrap">
       <div className="legal-page-intro">

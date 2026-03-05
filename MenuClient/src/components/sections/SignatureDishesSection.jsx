@@ -1,10 +1,11 @@
 import { FALLBACK_SIGNATURE_IMAGES, getSafeImageUrl } from '../../utils/imageUtils.js';
 
 function normalizeSlides(items) {
-  const sourceItems = Array.isArray(items) && items.length ? items : [{ title: 'Chef Selection' }];
+  const sourceItems = Array.isArray(items) ? items.filter(Boolean) : [];
+  if (!sourceItems.length) return [];
   const valid = sourceItems.map((item, index) => ({
     ...item,
-    title: item?.title || 'Chef Selection',
+    title: item?.title || item?.name || '',
     imageUrl: getSafeImageUrl(item?.imageUrl, FALLBACK_SIGNATURE_IMAGES[index % FALLBACK_SIGNATURE_IMAGES.length]),
   }));
   if (valid.length >= 4) return valid;

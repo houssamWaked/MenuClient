@@ -1,7 +1,5 @@
 import { useState } from 'react';
-
-const FALLBACK_IMAGE =
-  'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1800&q=80';
+import { FALLBACK_IMAGES, getSafeImageUrl } from '../../utils/imageUtils.js';
 
 function ArrowIcon() {
   return (
@@ -30,6 +28,7 @@ function getAddress(locations) {
 
 export function ReservationSection({
   reservationRef,
+  reservation,
   orderForm,
   onOrderFormChange,
   locations,
@@ -42,39 +41,44 @@ export function ReservationSection({
 }) {
   const [showAdvancedForm, setShowAdvancedForm] = useState(false);
   const changeField = (field) => (event) => onOrderFormChange(field, event.target.value);
-  const panelImage = locations?.[0]?.imageUrl || FALLBACK_IMAGE;
+  const primaryLocation = locations?.[0] ?? {};
+  const panelImage = getSafeImageUrl(
+    reservation?.imageUrl || primaryLocation.imageUrl,
+    FALLBACK_IMAGES.banner
+  );
   const address = getAddress(locations);
+  const hours = Array.isArray(reservation?.hours) && reservation.hours.length
+    ? reservation.hours
+    : Array.isArray(primaryLocation.hours)
+      ? primaryLocation.hours
+      : [];
+  const typeOptions = Array.isArray(reservation?.typeOptions) ? reservation.typeOptions : [];
 
   return (
     <section className="content-shell section reservation-wrap" ref={reservationRef}>
       <div className="reservation-showcase-header">
         <div className="reservation-showcase-title">
           <span className="reservation-showcase-line" />
-          <h2>Reserve Your Experience</h2>
+          <h2>{reservation?.title}</h2>
         </div>
-        <p>
-          Every course ascends toward heaven, &amp; time slows to rhythm of fine wine, &amp;
-          unforgettable flavor
-        </p>
+        <p>{reservation?.description}</p>
       </div>
 
       <div className="reservation-showcase-panel" style={{ backgroundImage: `url(${panelImage})` }}>
         <div className="reservation-showcase-overlay" />
         <article className="reservation-showcase-content">
-          <h3>An Evening Of Exquisite Taste, Quiet Luxury</h3>
+          <h3>{reservation?.headline}</h3>
           <div className="reservation-hours-grid">
-            <div>
-              <h4>Monday to Friday</h4>
-              <p>9:00AM -10:00PM</p>
-            </div>
-            <div>
-              <h4>Saturday and Sunday</h4>
-              <p>9:00AM -12:00PM</p>
-            </div>
+            {hours.map((entry) => (
+              <div key={`${entry.label}-${entry.value}`}>
+                <h4>{entry.label}</h4>
+                <p>{entry.value}</p>
+              </div>
+            ))}
           </div>
 
           <div className="reservation-address">
-            <h4>Address</h4>
+            <h4>{reservation?.addressLabel}</h4>
             <p>{address}</p>
           </div>
 
@@ -83,7 +87,7 @@ export function ReservationSection({
             className="reservation-cta"
             onClick={() => setShowAdvancedForm((previous) => !previous)}
           >
-            <span>Make A Reservation</span>
+            <span>{reservation?.ctaLabel}</span>
             <span className="reservation-cta-icon" aria-hidden="true">
               <ArrowIcon />
             </span>
@@ -98,20 +102,20 @@ export function ReservationSection({
         <div className="reservation-advanced">
           <div className="reservation-grid">
             <form className="reservation-form-card reservation-form" onSubmit={onOrderSubmit}>
-              <h3>Make A Reservation</h3>
+              <h3>{reservation?.formTitle}</h3>
               <div className="two-columns">
                 <input
                   type="text"
                   value={orderForm.name}
                   onChange={changeField('name')}
-                  placeholder="Full Name"
+                  placeholder={reservation?.namePlaceholder}
                   required
                 />
                 <input
                   type="email"
                   value={orderForm.email}
                   onChange={changeField('email')}
-                  placeholder="Email Address"
+                  placeholder={reservation?.emailPlaceholder}
                   required
                 />
               </div>
@@ -120,12 +124,14 @@ export function ReservationSection({
                   type="text"
                   value={orderForm.phone}
                   onChange={changeField('phone')}
-                  placeholder="Phone"
+                  placeholder={reservation?.phonePlaceholder}
                 />
                 <select value={orderForm.type} onChange={changeField('type')}>
-                  <option value="online">Online</option>
-                  <option value="delivery">Delivery</option>
-                  <option value="takeaway">Takeaway</option>
+                  {typeOptions.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
                 </select>
               </div>
               <select value={orderForm.locationId} onChange={changeField('locationId')}>
@@ -139,10 +145,10 @@ export function ReservationSection({
                 rows={4}
                 value={orderForm.notes}
                 onChange={changeField('notes')}
-                placeholder="Notes"
+                placeholder={reservation?.notesPlaceholder}
               />
               <button type="submit" className="btn-primary">
-                Confirm Reservation
+                {reservation?.submitButton}
               </button>
               {orderStatus.message ? (
                 <p className={`form-state ${orderStatus.type}`}>{orderStatus.message}</p>
@@ -150,7 +156,7 @@ export function ReservationSection({
             </form>
 
             <aside className="reservation-cart">
-              <h4>Selected Dishes</h4>
+              <h4>{reservation?.cartTitle}</h4>
               <div className="cart-list">
                 {cartItems.map((entry) => (
                   <article key={entry.item.id} className="cart-item">
@@ -169,9 +175,9 @@ export function ReservationSection({
                     </div>
                   </article>
                 ))}
-                {!cartItems.length ? <p>No dishes selected yet.</p> : null}
+                {!cartItems.length ? <p>{reservation?.emptyCartText}</p> : null}
                 <div className="cart-total">
-                  <span>Total</span>
+                  <span>{reservation?.totalLabel}</span>
                   <strong>{currencyFormatter.format(cartTotal)}</strong>
                 </div>
               </div>

@@ -35,20 +35,22 @@ export function HomePage({
       />
 
       <HomeMenuSection
+        title={view.theme.menuTitle}
         sections={homeMenuSections}
         description={homeMenuDescription}
         imageUrl={homeMenuImage}
+        buttonLabel={view.theme.menuExploreLabel}
         onExploreMenu={() => onNavigate('/menu')}
       />
 
       <SignatureDishesSection
-        title={view.theme.specialsTitle || 'Signature Dishes'}
+        title={view.theme.specialsTitle}
         description={signatureDescription}
         items={signatureDishes}
       />
 
       <AmbianceSection
-        title={view.theme.galleryTitle || 'The Ambiance'}
+        title={view.theme.galleryTitle}
         description={ambianceDescription}
         items={ambianceItems}
       />

@@ -21,7 +21,11 @@ export function AboutPage({
 
       <AboutTimelineSection timeline={view.timeline} about={view.about} />
       <AboutHighlightsSection about={view.about} />
-      <TeamShowcaseSection team={view.team} />
+      <TeamShowcaseSection
+        title={view.about.teamTitle}
+        description={view.about.teamDescription}
+        team={view.team}
+      />
       <ReservationSection {...reservationProps} />
     </>
   );

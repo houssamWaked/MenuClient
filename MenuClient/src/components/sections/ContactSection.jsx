@@ -16,7 +16,12 @@ export function ContactSection({ contact, contactForm, onContactFormChange, onCo
             placeholder={contact.emailPlaceholder}
             required
           />
-          <input type="text" value={contactForm.phone} onChange={changeField('phone')} placeholder="Phone" />
+          <input
+            type="text"
+            value={contactForm.phone}
+            onChange={changeField('phone')}
+            placeholder={contact.phonePlaceholder}
+          />
           <input
             type="text"
             value={contactForm.subject}

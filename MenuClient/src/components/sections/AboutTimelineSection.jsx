@@ -1,5 +1,4 @@
-const FALLBACK_IMAGE =
-  'https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1400&q=80';
+import { FALLBACK_IMAGES, getSafeImageUrl } from '../../utils/imageUtils.js';
 
 function normalizeEntries(timeline, about) {
   const entries = Array.isArray(timeline) ? timeline : [];
@@ -12,8 +11,8 @@ function normalizeEntries(timeline, about) {
     id: entry.id || `${entry.title}-${index}`,
     title: entry.title,
     description: entry.description,
-    year: entry.year || `${1990 + index * 10}`,
-    imageUrl: entry.imageUrl || about?.primaryImage || FALLBACK_IMAGE,
+    year: entry.year || '',
+    imageUrl: entry.imageUrl || about?.primaryImage || '',
   }));
 }
 
@@ -27,7 +26,11 @@ export function AboutTimelineSection({ timeline, about }) {
         {entries.map((entry, index) => (
           <article className="about-timeline-row" key={entry.id || `${entry.title}-${index}`}>
             <div className="about-timeline-media">
-              <img src={entry.imageUrl || FALLBACK_IMAGE} alt={entry.title} loading="lazy" />
+              <img
+                src={getSafeImageUrl(entry.imageUrl, FALLBACK_IMAGES.ambiance)}
+                alt={entry.title}
+                loading="lazy"
+              />
             </div>
 
             <div className="about-timeline-divider" aria-hidden="true">

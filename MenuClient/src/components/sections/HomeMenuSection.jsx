@@ -10,9 +10,11 @@ function ArrowIcon() {
 }
 
 export function HomeMenuSection({
+  title,
   sections,
   description,
   imageUrl,
+  buttonLabel,
   onExploreMenu,
 }) {
   return (
@@ -20,7 +22,7 @@ export function HomeMenuSection({
       <div className="menu-showcase-header">
         <div className="menu-showcase-title">
           <span className="menu-showcase-line" />
-          <h2>Our Menu</h2>
+          <h2>{title}</h2>
         </div>
         <p>{description}</p>
       </div>
@@ -34,10 +36,7 @@ export function HomeMenuSection({
             >
               <div>
                 <h3>{entry.name}</h3>
-                <p>
-                  {entry.description ||
-                    'Discover a curated journey crafted with precision and timeless flavor.'}
-                </p>
+                <p>{entry.description}</p>
               </div>
               <span
                 className="menu-showcase-item-icon"
@@ -53,7 +52,7 @@ export function HomeMenuSection({
             className="menu-showcase-btn"
             onClick={onExploreMenu}
           >
-            <span>Explore Menu</span>
+            <span>{buttonLabel}</span>
             <span className="menu-showcase-btn-icon" aria-hidden="true">
               <ArrowIcon />
             </span>

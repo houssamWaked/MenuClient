@@ -13,6 +13,7 @@ export function TestimonialsSection({ title, description, testimonials }) {
     ...entry,
     avatarUrl: getSafeImageUrl(entry?.avatarUrl, FALLBACK_IMAGES.avatar),
     imageUrl: getSafeImageUrl(entry?.imageUrl, index === 0 ? FALLBACK_IMAGES.dish : FALLBACK_IMAGES.ambiance),
+    rating: Number(entry?.rating || 0),
   }));
   if (!items.length) return null;
 
@@ -33,7 +34,7 @@ export function TestimonialsSection({ title, description, testimonials }) {
               <img src={entry.avatarUrl} alt={entry.name} loading="lazy" />
               <div>
                 <h3>{entry.name}</h3>
-                <p>{entry.role || 'Guest'}</p>
+                <p>{entry.role}</p>
               </div>
             </header>
 
@@ -41,8 +42,8 @@ export function TestimonialsSection({ title, description, testimonials }) {
               <img src={entry.imageUrl} alt={entry.title} loading="lazy" />
             </div>
 
-            <div className="testimonial-stars" aria-label={`${entry.rating || 5} star rating`}>
-              {Array.from({ length: Number(entry.rating || 5) }).map((_, index) => (
+            <div className="testimonial-stars" aria-label={`${entry.rating} star rating`}>
+              {Array.from({ length: entry.rating }).map((_, index) => (
                 <span key={`${entry.id || entry.name}-star-${index}`}>
                   <StarIcon />
                 </span>

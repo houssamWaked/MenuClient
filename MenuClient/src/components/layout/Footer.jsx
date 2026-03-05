@@ -54,6 +54,15 @@ function XIcon() {
   );
 }
 
+const SOCIAL_ICONS = {
+  instagram: InstagramIcon,
+  linkedin: LinkedinIcon,
+  pinterest: PinterestIcon,
+  facebook: FacebookIcon,
+  x: XIcon,
+  twitter: XIcon,
+};
+
 function LinkButton({ label, onClick }) {
   return (
     <button type="button" className="footer-link-btn" onClick={onClick}>
@@ -73,53 +82,49 @@ export function Footer({
   onNewsletterEmailChange,
   onNewsletterSubmit,
   newsletterStatus,
+  socialLinks = [],
 }) {
-  const quickLinks = [
-    { label: 'Home', onClick: () => onNavigate('/') },
-    { label: 'Menu', onClick: () => onNavigate('/menu') },
-    { label: 'Cart', onClick: () => onNavigate('/cart') },
-    { label: 'About', onClick: () => onNavigate('/about') },
-    { label: 'Contact', onClick: () => onNavigate('/contact') },
-    { label: 'Reservation', onClick: onScrollToReservation },
-  ];
+  const quickLinks = Array.isArray(footer.quickLinks) ? footer.quickLinks : [];
+  const utilityLinks = Array.isArray(footer.utilityLinks) ? footer.utilityLinks : [];
 
-  const utilityLinks = [
-    { label: 'Blogs', onClick: () => onNavigate('/blog') },
-    { label: 'Terms & Conditions', onClick: () => onNavigate('/terms') },
-    { label: 'Privacy Policy', onClick: () => onNavigate('/privacy') },
-  ];
+  function getLinkHandler(entry) {
+    if (entry.action === 'reservation') {
+      return onScrollToReservation;
+    }
+    return () => onNavigate(entry.href);
+  }
 
   return (
     <footer className="footer">
       <div className="content-shell footer-grid">
         <section>
-          <h4 className="footer-title">Quick Links</h4>
+          <h4 className="footer-title">{footer.quickLinksTitle}</h4>
           <div className="footer-link-list">
             {quickLinks.map((entry) => (
               <LinkButton
                 key={entry.label}
                 label={entry.label}
-                onClick={entry.onClick}
+                onClick={getLinkHandler(entry)}
               />
             ))}
           </div>
         </section>
 
         <section>
-          <h4 className="footer-title">Utility Pages</h4>
+          <h4 className="footer-title">{footer.utilityLinksTitle}</h4>
           <div className="footer-link-list">
             {utilityLinks.map((entry) => (
               <LinkButton
                 key={entry.label}
                 label={entry.label}
-                onClick={entry.onClick}
+                onClick={getLinkHandler(entry)}
               />
             ))}
           </div>
         </section>
 
         <section>
-          <h4 className="footer-title">Newsletter</h4>
+          <h4 className="footer-title">{footer.stayConnectedTitle}</h4>
           <p className="footer-news-copy">{footer.stayConnectedText}</p>
           <form className="newsletter-form" onSubmit={onNewsletterSubmit}>
             <input
@@ -144,46 +149,29 @@ export function Footer({
           ) : null}
 
           <div className="footer-socials">
-            <button
-              type="button"
-              className="footer-social-btn"
-              aria-label="Instagram"
-            >
-              <InstagramIcon />
-            </button>
-            <button
-              type="button"
-              className="footer-social-btn"
-              aria-label="LinkedIn"
-            >
-              <LinkedinIcon />
-            </button>
-            <button
-              type="button"
-              className="footer-social-btn"
-              aria-label="Pinterest"
-            >
-              <PinterestIcon />
-            </button>
-            <button
-              type="button"
-              className="footer-social-btn"
-              aria-label="Facebook"
-            >
-              <FacebookIcon />
-            </button>
-            <button type="button" className="footer-social-btn" aria-label="X">
-              <XIcon />
-            </button>
+            {socialLinks.map((entry) => {
+              const Icon = SOCIAL_ICONS[entry.platform] || XIcon;
+              return (
+                <a
+                  key={`${entry.platform}-${entry.href}`}
+                  className="footer-social-btn"
+                  href={entry.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={entry.label}
+                >
+                  <Icon />
+                </a>
+              );
+            })}
           </div>
         </section>
       </div>
 
       <div className="footer-bottom content-shell">
-        <span>{footer.copyright || 'Copyrights are reserved @ SAVORIA'}</span>
+        <span>{footer.copyright}</span>
         <span>
-          Designed by {footer.creditBrand || 'Jitu Raut'}{' '}
-          {footer.creditHandle || '@fremix.design'}
+          {footer.creditPrefix} {footer.creditBrand} {footer.creditHandle}
         </span>
       </div>
     </footer>

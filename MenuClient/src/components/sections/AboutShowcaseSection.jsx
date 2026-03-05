@@ -11,16 +11,14 @@ function ArrowIcon() {
 
 export function AboutShowcaseSection({ about, description, onExplore }) {
   const valueCards = Array.isArray(about?.values) ? about.values.slice(0, 4) : [];
-  const detailText = Array.isArray(about?.detailParagraphs)
-    ? about.detailParagraphs[0]
-    : 'Our story is one of growth, exploration, and unforgettable culinary memories where every chapter is served with elegance.';
+  const detailText = Array.isArray(about?.detailParagraphs) ? about.detailParagraphs[0] : '';
 
   return (
     <section className="content-shell section about-showcase">
       <div className="about-showcase-header">
         <div className="about-showcase-title">
           <span className="about-showcase-line" />
-          <h2>About Us</h2>
+          <h2>{about?.sectionTitle}</h2>
         </div>
         <p>{description}</p>
       </div>
@@ -30,16 +28,16 @@ export function AboutShowcaseSection({ about, description, onExplore }) {
           <div className="about-showcase-image-wrap">
             <img
               src={getSafeImageUrl(about?.primaryImage, FALLBACK_IMAGES.ambiance)}
-              alt={about?.title || 'About the restaurant'}
+              alt={about?.title || about?.sectionTitle || ''}
               loading="lazy"
             />
           </div>
           <article className="about-showcase-content">
-            <span className="about-showcase-badge">{about.badge || 'Michelin Star, 2025'}</span>
-            <h3>{about.detailTitle || 'Explore Our Story For Refined Cuisine And Timeless Ambiance'}</h3>
+            <span className="about-showcase-badge">{about?.badge}</span>
+            <h3>{about?.detailTitle}</h3>
             <p>{detailText}</p>
             <button type="button" className="about-showcase-btn" onClick={onExplore}>
-              <span>Explore Our Story</span>
+              <span>{about?.ctaLabel}</span>
               <span className="about-showcase-btn-icon" aria-hidden="true">
                 <ArrowIcon />
               </span>

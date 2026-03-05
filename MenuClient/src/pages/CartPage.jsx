@@ -4,6 +4,7 @@ export function CartPage({
   bannerImage,
   pageTitle,
   bannerDescription,
+  theme,
   cartItems,
   cartTotal,
   cartCount,
@@ -25,10 +26,10 @@ export function CartPage({
         <div className="cart-page-layout">
           <article className="cart-page-items-card">
             <div className="cart-page-head">
-              <h2>Your Selected Dishes</h2>
+              <h2>{theme?.cartTitle}</h2>
               {cartItems.length ? (
                 <button type="button" className="cart-clear-btn" onClick={onClearCart}>
-                  Clear Cart
+                  {theme?.cartClearLabel}
                 </button>
               ) : null}
             </div>
@@ -39,7 +40,9 @@ export function CartPage({
                   <article key={entry.item.id} className="cart-item">
                     <div className="cart-page-item-copy">
                       <h5>{entry.item.name}</h5>
-                      <p>{currencyFormatter.format(Number(entry.item.basePrice || 0))} each</p>
+                      <p>
+                        {currencyFormatter.format(Number(entry.item.basePrice || 0))} {theme?.cartEachLabel}
+                      </p>
                     </div>
                     <div className="cart-page-item-meta">
                       <strong className="cart-page-line-total">
@@ -69,7 +72,7 @@ export function CartPage({
                         className="cart-remove-btn"
                         onClick={() => onUpdateCartQuantity(entry.item.id, 0)}
                       >
-                        Remove
+                        {theme?.cartRemoveLabel}
                       </button>
                     </div>
                   </article>
@@ -77,22 +80,22 @@ export function CartPage({
               </div>
             ) : (
               <div className="cart-empty-state">
-                <p>Your cart is empty. Add dishes from the menu to continue.</p>
+                <p>{theme?.cartEmptyMessage}</p>
                 <button type="button" className="btn-primary" onClick={() => onNavigate('/menu')}>
-                  Browse Menu
+                  {theme?.cartBrowseLabel}
                 </button>
               </div>
             )}
           </article>
 
           <aside className="cart-page-summary-card">
-            <h3>Order Summary</h3>
+            <h3>{theme?.cartSummaryTitle}</h3>
             <div className="cart-page-summary-row">
-              <span>Items</span>
+              <span>{theme?.cartItemsLabel}</span>
               <strong>{cartCount}</strong>
             </div>
             <div className="cart-page-summary-row total">
-              <span>Total</span>
+              <span>{theme?.cartTotalLabel}</span>
               <strong>{currencyFormatter.format(cartTotal)}</strong>
             </div>
 
@@ -102,10 +105,10 @@ export function CartPage({
               onClick={onBook}
               disabled={!cartItems.length}
             >
-              Continue To Reservation
+              {theme?.cartContinueLabel}
             </button>
             <button type="button" className="cart-secondary-btn" onClick={() => onNavigate('/menu')}>
-              Add More Dishes
+              {theme?.cartAddMoreLabel}
             </button>
           </aside>
         </div>

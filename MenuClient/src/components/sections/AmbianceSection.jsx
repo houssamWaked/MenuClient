@@ -1,10 +1,11 @@
 import { FALLBACK_AMBIANCE_IMAGES, getSafeImageUrl } from '../../utils/imageUtils.js';
 
 function normalizeSlides(items) {
-  const sourceItems = Array.isArray(items) && items.length ? items : [{ title: 'Restaurant Ambiance' }];
+  const sourceItems = Array.isArray(items) ? items.filter(Boolean) : [];
+  if (!sourceItems.length) return [];
   const valid = sourceItems.map((item, index) => ({
     ...item,
-    title: item?.title || 'Restaurant Ambiance',
+    title: item?.title || '',
     imageUrl: getSafeImageUrl(item?.imageUrl, FALLBACK_AMBIANCE_IMAGES[index % FALLBACK_AMBIANCE_IMAGES.length]),
   }));
   if (valid.length >= 4) return valid;

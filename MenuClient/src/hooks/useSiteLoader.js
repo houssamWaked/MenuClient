@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { publicSiteApi } from '../api/publicSite.js';
-import { FALLBACK_SLUGS } from '../siteData.js';
+import { DEFAULT_SLUG } from '../siteData.js';
 import { dedupeStrings, parseError, persistSlug } from '../siteHelpers.js';
 
 export function useSiteLoader(preferredSlug, onSiteLoaded) {
@@ -15,7 +15,7 @@ export function useSiteLoader(preferredSlug, onSiteLoaded) {
     async function loadSite() {
       setLoading(true);
       setLoadError('');
-      const candidates = dedupeStrings([preferredSlug, ...FALLBACK_SLUGS]);
+      const candidates = dedupeStrings([preferredSlug, DEFAULT_SLUG]);
       let lastError = null;
 
       for (const candidate of candidates) {
