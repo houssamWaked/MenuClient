@@ -28,3 +28,4 @@ export function TimelineSection({ detailTitle, timeline }) {
     </section>
   );
 }
+//s
